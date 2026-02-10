@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  analysisController,
   applicationCheckController,
   resumeParser,
   screenshotParser,
@@ -22,3 +23,5 @@ applicationRouter.post(
 applicationRouter.get("/resume-parser", resumeParser);
 
 applicationRouter.get("/screenshot-parser", screenshotParser);
+
+applicationRouter.get("/analysis", analysisController);

@@ -1,7 +1,8 @@
-import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
+import fs from "fs";
+import pdf from "pdf-parse";
 
-export const extractTextFromPDF = async (filePath: string): Promise<string> => {
-  const loader = new PDFLoader(filePath);
-  const docs = await loader.load();
-  return docs.map((doc) => doc.pageContent).join("\n");
-};
+export async function extractTextFromPDF(filePath: string) {
+  const buffer = fs.readFileSync(filePath);
+  const data = await pdf(buffer);
+  return data.text;
+}

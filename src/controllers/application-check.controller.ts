@@ -2,7 +2,13 @@ import type { Request, Response } from "express";
 
 import { extractTextFromPDF } from "../utils/pdfProcessor.js";
 import { extractTextFromImage } from "../utils/ocrProcessor.js";
-import { extractStructuredResume } from "../utils/structuredExtractor.js";
+import {
+  extractStructuredApplication,
+  extractStructuredResume,
+} from "../utils/structuredExtractor.js";
+import { analyzeApplicationWithAI } from "../utils/analysis.js";
+import { resumeData } from "../compare/resume.js";
+import { screenshotData } from "../compare/screenshot.js";
 
 export const applicationCheckController = (req: Request, res: Response) => {
   try {
@@ -37,7 +43,7 @@ export const screenshotParser = async (req: Request, res: Response) => {
     const filePath = "uploads/fa82f96a15307a5337d025abcb45aa33";
     const cleanedText = await extractTextFromImage(filePath);
 
-    const structuredData = await extractStructuredResume(cleanedText);
+    const structuredData = await extractStructuredApplication(cleanedText);
 
     res.json({
       success: true,
@@ -52,10 +58,10 @@ export const screenshotParser = async (req: Request, res: Response) => {
   }
 };
 
-export const analysisController = (req: Response, res: Response) => {
+export const analysisController = async (req: Response, res: Response) => {
   try {
-    const resumeStructured = {};
-    const screenshotStructured = {};
+    const response = await analyzeApplicationWithAI(resumeData, screenshotData);
+    res.json({ success: true, message: "Analysis", data: response });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
