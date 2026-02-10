@@ -21,11 +21,17 @@
   },
   "homepage": "https://github.com/RitickLath/application-mismatch-agent#readme",
   "dependencies": {
+    "@langchain/community": "^1.1.13",
+    "@langchain/core": "^1.1.20",
     "dotenv": "^16.4.1",
-    "express": "^5.0.0"
+    "express": "^5.0.0",
+    "multer": "^2.0.2",
+    "pdf-parse": "^1.1.1",
+    "tesseract.js": "^7.0.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
+    "@types/multer": "^2.0.0",
     "@types/node": "^20.11.0",
     "eslint": "^9.0.0",
     "nodemon": "^3.1.0",
