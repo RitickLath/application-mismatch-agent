@@ -2,8 +2,6 @@ import express from "express";
 import {
   analysisController,
   applicationCheckController,
-  resumeParser,
-  screenshotParser,
 } from "../controllers/application-check.controller.js";
 import multer from "multer";
 
@@ -19,9 +17,5 @@ applicationRouter.post(
   ]),
   applicationCheckController,
 );
-
-applicationRouter.get("/resume-parser", resumeParser);
-
-applicationRouter.get("/screenshot-parser", screenshotParser);
 
 applicationRouter.get("/analysis", analysisController);
