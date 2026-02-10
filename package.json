@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon --exec node --loader ts-node/esm src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js"
   },
   "repository": {
@@ -23,11 +23,13 @@
   "dependencies": {
     "@langchain/community": "^1.1.13",
     "@langchain/core": "^1.1.20",
+    "@langchain/openai": "^1.2.6",
     "dotenv": "^16.4.1",
     "express": "^5.0.0",
     "multer": "^2.0.2",
     "pdf-parse": "^1.1.1",
-    "tesseract.js": "^7.0.0"
+    "tesseract.js": "^7.0.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
@@ -37,6 +39,7 @@
     "nodemon": "^3.1.0",
     "prettier": "^3.2.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.3.0"
   }
 }

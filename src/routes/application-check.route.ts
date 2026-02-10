@@ -2,9 +2,7 @@ import express from "express";
 import {
   applicationCheckController,
   resumeParser,
-  resumeStructuredData,
   screenshotParser,
-  screenshotStructuredData,
 } from "../controllers/application-check.controller.js";
 import multer from "multer";
 
@@ -24,7 +22,3 @@ applicationRouter.post(
 applicationRouter.get("/resume-parser", resumeParser);
 
 applicationRouter.get("/screenshot-parser", screenshotParser);
-
-applicationRouter.get("/resume-structured-data", resumeStructuredData);
-
-applicationRouter.get("/screenshot-structured-data", screenshotStructuredData);

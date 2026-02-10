@@ -1,5 +1,7 @@
 import express, { type Application } from "express";
 import { applicationRouter } from "./routes/application-check.route.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app: Application = express();
 
