@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 
-import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
-import { createWorker } from "tesseract.js";
+import { extractTextFromPDF } from "../utils/pdfProcessor.js";
+import { extractTextFromImage } from "../utils/ocrProcessor.js";
 import { extractStructuredResume } from "../utils/structuredExtractor.js";
 
 export const applicationCheckController = (req: Request, res: Response) => {
@@ -16,10 +16,8 @@ export const applicationCheckController = (req: Request, res: Response) => {
 
 export const resumeParser = async (req: Request, res: Response) => {
   try {
-    const loader = new PDFLoader("uploads/90696e9a0b27c554b7f5a74837b80639");
-    const docs = await loader.load();
-
-    const fullText = docs.map((doc) => doc.pageContent).join("\n");
+    const filePath = "uploads/90696e9a0b27c554b7f5a74837b80639";
+    const fullText = await extractTextFromPDF(filePath);
 
     const structuredData = await extractStructuredResume(fullText);
     console.log(structuredData);
@@ -37,17 +35,7 @@ export const resumeParser = async (req: Request, res: Response) => {
 export const screenshotParser = async (req: Request, res: Response) => {
   try {
     const filePath = "uploads/fa82f96a15307a5337d025abcb45aa33";
-
-    const worker = await createWorker("eng");
-
-    const ret = await worker.recognize(filePath);
-
-    await worker.terminate();
-
-    // Clean OCR text (Noise Removal)
-    const cleanedText = ret.data.text
-      .replace(/\s+/g, " ")
-      .replace(/[^\x00-\x7F]/g, "");
+    const cleanedText = await extractTextFromImage(filePath);
 
     const structuredData = await extractStructuredResume(cleanedText);
 
@@ -61,5 +49,15 @@ export const screenshotParser = async (req: Request, res: Response) => {
       success: false,
       message: error,
     });
+  }
+};
+
+export const analysisController = (req: Response, res: Response) => {
+  try {
+    const resumeStructured = {};
+    const screenshotStructured = {};
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
