@@ -26,8 +26,10 @@ export const applicationCheckController = (req: Request, res: Response) => {
 // Extracts text -> Converts to JSON -> Performs AI Comparison.
 export const analysisController = async (req: Request, res: Response) => {
   try {
-    const resumeFilePath = "uploads/90696e9a0b27c554b7f5a74837b80639";
-    const screenshotFilePath = "uploads/fa82f96a15307a5337d025abcb45aa33";
+    // const resumeFilePath = "uploads/90696e9a0b27c554b7f5a74837b80639";
+    const resumeFilePath = "uploads/resume.pdf";
+    // const screenshotFilePath = "uploads/fa82f96a15307a5337d025abcb45aa33";
+    const screenshotFilePath = "uploads/3.jpg";
 
     console.log("--- Starting Analysis Process ---");
 

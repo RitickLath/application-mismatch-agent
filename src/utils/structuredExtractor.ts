@@ -1,9 +1,16 @@
 import { ChatOpenAI } from "@langchain/openai";
 
 const model = new ChatOpenAI({
-  model: "gpt-4o-mini",
+  model: "gpt-4o",
   temperature: 0,
 });
+
+const cleanJSON = (text: string) => {
+  return text
+    .replace(/```json/g, "")
+    .replace(/```/g, "")
+    .trim();
+};
 
 export const extractStructuredResume = async (text: string) => {
   const response = await model.invoke(`
@@ -51,8 +58,15 @@ Example response:
 Resume Text:
 ${text}
 `);
+  const usage = response.response_metadata?.tokenUsage;
 
-  return JSON.parse(response.content as string);
+  console.log("Token Usage:", {
+    promptTokens: usage?.promptTokens,
+    completionTokens: usage?.completionTokens,
+    totalTokens: usage?.totalTokens,
+  });
+
+  return JSON.parse(cleanJSON(response.content as string));
 };
 
 export const extractStructuredApplication = async (text: string) => {
@@ -112,5 +126,5 @@ Application Text:
 ${text}
 `);
 
-  return JSON.parse(response.content as string);
+  return JSON.parse(cleanJSON(response.content as string));
 };
